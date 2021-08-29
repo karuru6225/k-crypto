@@ -30,7 +30,12 @@ export function sha1(contents: Uint8Array | string): string {
     return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(contents));
   }
 
-  const wordArray = CryptoJS.lib.WordArray.create([...(new Uint32Array(contents))], contents.byteLength);
+  const wordArray = CryptoJS.lib.WordArray.create();
+  const chunkSize = 256;
+  for (let byte = 0; byte < contents.length; byte += chunkSize) {
+    const chunk = contents.slice(byte, byte + chunkSize);
+    wordArray.concat(CryptoJS.lib.WordArray.create([...(new Uint32Array(chunk))], chunk.length));
+  }
   return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(wordArray));
 }
 
