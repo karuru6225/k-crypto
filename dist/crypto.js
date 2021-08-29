@@ -39,14 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         }
     };
     function sha1(contents) {
-        // console.log('start sha1');
         if (typeof contents === 'string') {
             return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(contents));
         }
         const wordArray = crypto_js_1.default.lib.WordArray.create();
         const chunkSize = 1024;
         for (let byte = 0; byte < contents.length; byte += chunkSize) {
-            // console.log(`slicing ${byte} - ${byte + chunkSize}`);
             const chunk = contents.slice(byte, byte + chunkSize);
             wordArray.concat(crypto_js_1.default.lib.WordArray.create([...(new Uint32Array(chunk))], chunk.length));
         }

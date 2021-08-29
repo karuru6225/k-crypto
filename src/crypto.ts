@@ -26,7 +26,6 @@ const JsonFormatter = {
 };
 
 export function sha1(contents: Uint8Array | string): string {
-  // console.log('start sha1');
   if (typeof contents === 'string') {
     return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(contents));
   }
@@ -34,7 +33,6 @@ export function sha1(contents: Uint8Array | string): string {
   const wordArray = CryptoJS.lib.WordArray.create();
   const chunkSize = 1024;
   for (let byte = 0; byte < contents.length; byte += chunkSize) {
-    // console.log(`slicing ${byte} - ${byte + chunkSize}`);
     const chunk = contents.slice(byte, byte + chunkSize);
     wordArray.concat(CryptoJS.lib.WordArray.create([...(new Uint32Array(chunk))], chunk.length));
   }
