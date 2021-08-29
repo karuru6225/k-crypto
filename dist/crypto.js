@@ -38,11 +38,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             return cipherParams;
         }
     };
-    // export function sha1(contents: crypto.BinaryLike): string {
-    //   const shasum = crypto.createHash('sha1');
-    //   shasum.update(contents);
-    //   return shasum.digest('hex')
-    // }
     function sha1(contents) {
         if (typeof contents === 'string') {
             return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(contents));

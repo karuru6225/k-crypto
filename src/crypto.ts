@@ -25,12 +25,6 @@ const JsonFormatter = {
   }
 };
 
-// export function sha1(contents: crypto.BinaryLike): string {
-//   const shasum = crypto.createHash('sha1');
-//   shasum.update(contents);
-//   return shasum.digest('hex')
-// }
-
 export function sha1(contents: Uint32Array | string): string {
   if (typeof contents === 'string') {
     return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(contents));
