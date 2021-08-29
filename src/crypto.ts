@@ -31,7 +31,7 @@ export function sha1(contents: Uint8Array | string): string {
   }
 
   const wordArray = CryptoJS.lib.WordArray.create();
-  const chunkSize = 256;
+  const chunkSize = 1024;
   for (let byte = 0; byte < contents.length; byte += chunkSize) {
     const chunk = contents.slice(byte, byte + chunkSize);
     console.log(`slice ${byte} - ${byte + chunkSize}`);
