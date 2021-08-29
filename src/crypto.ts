@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+import 'crypto-js/lib-typedarrays';
 import pako from 'pako';
 
 const JsonFormatter = {
@@ -25,19 +26,19 @@ const JsonFormatter = {
   }
 };
 
-export function sha1(contents: Uint8Array | string): string {
+export function sha1(contents: any | string): string {
   if (typeof contents === 'string') {
     return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(contents));
   }
 
-  const wordArray = CryptoJS.lib.WordArray.create();
-  const chunkSize = 1024;
-  for (let byte = 0; byte < contents.length; byte += chunkSize) {
-    const chunk = contents.slice(byte, byte + chunkSize);
-    const chunkAry = [...(new Uint32Array(chunk.buffer))];
-    wordArray.concat(CryptoJS.lib.WordArray.create(chunkAry, chunk.length));
-  }
-  return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(wordArray));
+  // const wordArray = CryptoJS.lib.WordArray.create();
+  // const chunkSize = 1024;
+  // for (let byte = 0; byte < contents.length; byte += chunkSize) {
+  //   const chunk = contents.slice(byte, byte + chunkSize);
+  //   const chunkAry = [...(new Uint32Array(chunk.buffer))];
+  //   wordArray.concat(CryptoJS.lib.WordArray.create(chunkAry, chunk.length));
+  // }
+  return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(CryptoJS.lib.WordArray.create(contents)));
 }
 
 export const getFilename = (hash: string, fileIndex: number | string): string =>

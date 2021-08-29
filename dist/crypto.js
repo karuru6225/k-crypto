@@ -7,13 +7,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "crypto-js", "pako"], factory);
+        define(["require", "exports", "crypto-js", "crypto-js/lib-typedarrays", "pako"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.decrypt = exports.encrypt = exports.getFilename = exports.sha1 = void 0;
     const crypto_js_1 = __importDefault(require("crypto-js"));
+    require("crypto-js/lib-typedarrays");
     const pako_1 = __importDefault(require("pako"));
     const JsonFormatter = {
         stringify: (cipherParams) => {
@@ -42,14 +43,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         if (typeof contents === 'string') {
             return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(contents));
         }
-        const wordArray = crypto_js_1.default.lib.WordArray.create();
-        const chunkSize = 1024;
-        for (let byte = 0; byte < contents.length; byte += chunkSize) {
-            const chunk = contents.slice(byte, byte + chunkSize);
-            const chunkAry = [...(new Uint32Array(chunk.buffer))];
-            wordArray.concat(crypto_js_1.default.lib.WordArray.create(chunkAry, chunk.length));
-        }
-        return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(wordArray));
+        // const wordArray = CryptoJS.lib.WordArray.create();
+        // const chunkSize = 1024;
+        // for (let byte = 0; byte < contents.length; byte += chunkSize) {
+        //   const chunk = contents.slice(byte, byte + chunkSize);
+        //   const chunkAry = [...(new Uint32Array(chunk.buffer))];
+        //   wordArray.concat(CryptoJS.lib.WordArray.create(chunkAry, chunk.length));
+        // }
+        return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(crypto_js_1.default.lib.WordArray.create(contents)));
     }
     exports.sha1 = sha1;
     const getFilename = (hash, fileIndex) => sha1(`${hash}_${fileIndex}`);
