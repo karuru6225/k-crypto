@@ -46,7 +46,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         const chunkSize = 1024;
         for (let byte = 0; byte < contents.length; byte += chunkSize) {
             const chunk = contents.slice(byte, byte + chunkSize);
-            wordArray.concat(crypto_js_1.default.lib.WordArray.create([...(new Uint32Array(chunk))], chunk.length));
+            const chunkAry = [...(new Uint32Array(chunk.buffer))];
+            wordArray.concat(crypto_js_1.default.lib.WordArray.create(chunkAry, chunk.length));
         }
         return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(wordArray));
     }
