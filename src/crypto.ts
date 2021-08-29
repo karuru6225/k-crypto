@@ -25,12 +25,12 @@ const JsonFormatter = {
   }
 };
 
-export function sha1(contents: Uint32Array | string): string {
+export function sha1(contents: Uint8Array | string): string {
   if (typeof contents === 'string') {
     return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(contents));
   }
 
-  const wordArray = CryptoJS.lib.WordArray.create([...contents]);
+  const wordArray = CryptoJS.lib.WordArray.create([...(new Uint32Array(contents))], contents.byteLength);
   return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(wordArray));
 }
 
