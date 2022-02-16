@@ -53,7 +53,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
         return crypto_js_1.default.enc.Hex.stringify(crypto_js_1.default.SHA1(crypto_js_1.default.lib.WordArray.create(contents)));
     }
     exports.sha1 = sha1;
-    const getFilename = (hash, fileIndex) => sha1(`${hash}_${fileIndex}`);
+    const getFilename = (hash, fileIndex, secret) => sha1(`${secret}_${hash}_${fileIndex}`);
     exports.getFilename = getFilename;
     function encrypt(uint8array, secret) {
         const srcString = uint8array.reduce((str, code) => str + String.fromCharCode(code), '');
