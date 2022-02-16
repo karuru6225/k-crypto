@@ -41,8 +41,8 @@ export function sha1(contents: any | string): string {
   return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(CryptoJS.lib.WordArray.create(contents)));
 }
 
-export const getFilename = (hash: string, fileIndex: number | string): string =>
-  sha1(`${hash}_${fileIndex}`);
+export const getFilename = (hash: string, fileIndex: number | string, secret: string): string =>
+  sha1(`${secret}_${hash}_${fileIndex}`);
 
 export function encrypt(uint8array: Uint8Array, secret: string): Uint8Array {
   const srcString = uint8array.reduce((str, code) => str + String.fromCharCode(code), '');
